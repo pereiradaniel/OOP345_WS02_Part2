@@ -4,7 +4,7 @@ namespace sdds {
 
 	StringSet::StringSet()
 	{
-		ss_strings = {};
+		ss_strings = nullptr;
 		ss_string_count = 0;
 	}
 
@@ -56,15 +56,14 @@ namespace sdds {
 			{
 				ss_strings[i] = input_string.ss_strings[i];
 			}
-			return *this;
 		}
+		return *this;
 	}
 
 	StringSet &StringSet::operator=(StringSet&& input_string) noexcept
 	{
 		//ss_strings = input_string.ss_strings;
 		if (this != &input_string) {
-			delete[] ss_strings;
 			if (input_string.ss_strings != nullptr)
 			{
 				ss_strings = input_string.ss_strings;
