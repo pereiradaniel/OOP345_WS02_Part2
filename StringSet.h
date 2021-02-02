@@ -20,7 +20,9 @@ namespace sdds {
 		StringSet();	// A no argument default constructor.
 		~StringSet();
 		StringSet(char* new_string);	// 1-argument constructor that receives the address of a c-style null terminated string containing the name of a file from which this member function populates the current object.
+		StringSet(const StringSet& input_string);
 		StringSet(StringSet&& input_string) noexcept;
+		StringSet& operator=(const StringSet& input_string);
 		StringSet& operator=(const StringSet&& input_string) noexcept;
 		size_t size();
 		std::string operator[](size_t index) const;
