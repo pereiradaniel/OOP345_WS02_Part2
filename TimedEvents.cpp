@@ -36,6 +36,7 @@ namespace sdds
 
 	ostream& operator<<(ostream& os, const TimedEvents& te)
 	{
+		os << "--------------------------\n";
 		os << "Execution Times:\n";
 		os << "--------------------------\n";
 

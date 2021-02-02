@@ -47,18 +47,7 @@ namespace sdds {
 		operator=(move(input_string));
 	}
 
-	StringSet& StringSet::operator=(const StringSet& input_string)
-	{
-		ss_string_count = input_string.ss_string_count;
-		ss_strings = new string[ss_string_count];
-		for (size_t i = 0; i < ss_string_count; ++i)
-		{
-			ss_strings[i] = input_string.ss_strings[i];
-		}
-		return *this;
-	}
-
-	StringSet &StringSet::operator=(const StringSet&& input_string) noexcept
+	StringSet& StringSet::operator=(const StringSet& input_string) noexcept
 	{
 		if (this != &input_string) {
 			ss_string_count = input_string.ss_string_count;
@@ -67,6 +56,25 @@ namespace sdds {
 			{
 				ss_strings[i] = input_string.ss_strings[i];
 			}
+			return *this;
+		}
+	}
+
+	StringSet &StringSet::operator=(StringSet&& input_string) noexcept
+	{
+		//ss_strings = input_string.ss_strings;
+		if (this != &input_string) {
+			delete[] ss_strings;
+			if (input_string.ss_strings != nullptr)
+			{
+				ss_strings = input_string.ss_strings;
+			}
+			else
+			{
+				ss_strings = nullptr;
+			}
+			ss_string_count = input_string.ss_string_count;
+			input_string.ss_strings = nullptr;
 		}	
 		return *this;
 	}
@@ -79,10 +87,11 @@ namespace sdds {
 	string StringSet::operator[](size_t index) const
 	{
 		string temp_string;
-		if (index <= ss_string_count && ss_string_count > 0) {
+		if (this->ss_strings != nullptr && index <= ss_string_count && ss_string_count > 0) {
 			temp_string = ss_strings[index];
 		}
-		else {
+		else
+		{
 			temp_string = "";
 		}
 		return temp_string;
