@@ -37,19 +37,21 @@ namespace sdds {
 		ss_string_count = i;
 	}
 
-	StringSet::StringSet(const StringSet& input_string)
+	StringSet::StringSet(StringSet&& input_string) noexcept
 	{
-		*this = input_string;
+		operator=(move(input_string));
 	}
 
-	StringSet& StringSet::operator=(const StringSet& input_string)
+	StringSet& StringSet::operator=(const StringSet&& input_string) noexcept
 	{
-		ss_string_count = input_string.ss_string_count;
-		ss_strings = new string[ss_string_count];
-		for (size_t i = 0; i < ss_string_count; ++i)
-		{
-			ss_strings[i] = input_string.ss_strings[i];
-		}
+		if (this != &input_string) {
+			ss_string_count = input_string.ss_string_count;
+			ss_strings = new string[ss_string_count];
+			for (size_t i = 0; i < ss_string_count; ++i)
+			{
+				ss_strings[i] = input_string.ss_strings[i];
+			}
+		}	
 		return *this;
 	}
 
